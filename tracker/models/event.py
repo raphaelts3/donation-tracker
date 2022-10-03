@@ -253,6 +253,10 @@ class Event(models.Model):
             raise ValidationError('Event ID must be positive and non-zero')
         if not re.match(r'^[\w\-]+$', self.short):
             raise ValidationError('Event short name must be a url-safe string')
+        if not re.match(r'^[\w]{1}[\w\-]*[\w]+$', self.short):
+            raise ValidationError(
+                'Event short name must starts and ends with letter or number'
+            )
         if not self.scheduleid:
             self.scheduleid = None
         if (
